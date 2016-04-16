@@ -61,6 +61,7 @@ function create() {
 
     //  Player physics properties. Give the little guy a slight bounce.
     player.body.bounce.y = 0.9;
+    player.body.bounce.x = 0.9;
     player.body.gravity.y = 300;
     player.body.collideWorldBounds = true;
 
