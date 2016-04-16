@@ -12,11 +12,6 @@ const shape = {
     square: {
         frame: 1,
         moving: function () {
-            if (! this.body.touching.none)
-            {
-                this.body.velocity.x = 0;
-                this.body.velocity.y = 0;
-            }
             if(this.body.velocity.x == 0 && this.body.velocity.y == 0)
             {
                 if (cursors.left.isDown)
