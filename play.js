@@ -4,11 +4,6 @@
 * @licence            {@link https://creativecommons.org/publicdomain/zero/1.0/deed.fr|CC0 1.0}
 */
 
-function preload() {
-    game.load.image('ground', 'assets/platform.png');
-    game.load.spritesheet('rolling', 'assets/rolling.png', 20, 20);
-    game.load.image('fire', 'assets/fire.png');
-}
 
 var player;
 var wall;
@@ -102,71 +97,78 @@ function shapeshift(form) {
     form.setup();
 }
 
-function create() {
-    //  We're going to be using physics, so enable the Arcade Physics system
-    // TODO: maybe use another mode...
-    game.physics.startSystem(Phaser.Physics.ARCADE);
+var playState = {
+    preload: function () {
+        game.load.image('ground', 'assets/platform.png');
+        game.load.spritesheet('rolling', 'assets/rolling.png', 20, 20);
+        game.load.image('fire', 'assets/fire.png');
+    },
+    create: function() {
+        //  We're going to be using physics, so enable the Arcade Physics system
+        // TODO: maybe use another mode...
+        game.physics.startSystem(Phaser.Physics.ARCADE);
 
-    //  A simple background for our game
-    background = game.make.bitmapData(800, 600);
-    background.addToWorld();
-    var grd = background.context.createLinearGradient(400,0,400,600);
-    grd.addColorStop(0, '#8ED6FF');
-    grd.addColorStop(1, '#003BA2');
+        //  A simple background for our game
+        background = game.make.bitmapData(800, 600);
+        background.addToWorld();
+        var grd = background.context.createLinearGradient(400,0,400,600);
+        grd.addColorStop(0, '#8ED6FF');
+        grd.addColorStop(1, '#003BA2');
 
-    background.cls();
-    background.rect(0,0,800,600, grd);
-    background.fill();
+        background.cls();
+        background.rect(0,0,800,600, grd);
+        background.fill();
 
-    //  The wall group contain ground and wall
-    wall = game.add.group();
-    wall.enableBody = true;     // For physics
+        //  The wall group contain ground and wall
+        wall = game.add.group();
+        wall.enableBody = true;     // For physics
 
-    // Here we create the ground.
-    var ground = wall.create(0, game.world.height - 64, 'ground');
+        // Here we create the ground.
+        var ground = wall.create(0, game.world.height - 64, 'ground');
 
-    //  This stops it from falling away when you jump on it
-    ground.body.immovable = true;
+        //  This stops it from falling away when you jump on it
+        ground.body.immovable = true;
 
-    //  Now let's create two ledges
-    var ledge = wall.create(400, 400, 'ground');
-    ledge.body.immovable = true;
+        //  Now let's create two ledges
+        var ledge = wall.create(400, 400, 'ground');
+        ledge.body.immovable = true;
 
-    ledge = wall.create(-150, 250, 'ground');
-    ledge.body.immovable = true;
+        ledge = wall.create(-150, 250, 'ground');
+        ledge.body.immovable = true;
 
 
-    // Dangerous stuff
-    killing = game.add.group();
-    killing.enableBody = true;
+        // Dangerous stuff
+        killing = game.add.group();
+        killing.enableBody = true;
 
-    // The bottom fire: it will kill you
-    //  TODO: it doesn't
-    fire = game.add.tileSprite(0,game.world.height-32,game.world.width,game.world.height,'fire');
-    killing.add(fire);
-    fire.body.immovable = true;
+        // The bottom fire: it will kill you
+        //  TODO: it doesn't
+        fire = game.add.tileSprite(0,game.world.height-32,game.world.width,game.world.height,'fire');
+        killing.add(fire);
+        fire.body.immovable = true;
 
-    // The player and its settings
-    player = game.add.sprite(32, game.world.height - 150, 'rolling');
+        // The player and its settings
+        player = game.add.sprite(32, game.world.height - 150, 'rolling');
 
-    //  We need to enable physics on the player
-    game.physics.arcade.enable(player);
+        //  We need to enable physics on the player
+        game.physics.arcade.enable(player);
 
-    shapeshift(square);
+        shapeshift(square);
 
-    //  Our controls.
-    cursors = game.input.keyboard.createCursorKeys();
-}
+        //  Our controls.
+        cursors = game.input.keyboard.createCursorKeys();
+    },
 
-function update() {
+    update: function() {
 
-    //  Collide the player and the stars with the wall
-    game.physics.arcade.collide(player, wall);
+        //  Collide the player and the stars with the wall
+        game.physics.arcade.collide(player, wall);
 
-    if (game.physics.arcade.collide(player, killing))
-    {
-        argg();                 // TODO: something...
+        if (game.physics.arcade.collide(player, killing))
+        {
+            argg();                 // TODO: something...
+        }
+
+        player.moving();
     }
-
-    player.moving();
-}
+};
