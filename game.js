@@ -6,13 +6,11 @@
 
 function preload() {
     game.load.image('ground', 'assets/platform.png');
-    game.load.image('rolling', 'assets/rolling.png');
+    game.load.spritesheet('rolling', 'assets/rolling.png', 20, 20);
     game.load.image('fire', 'assets/fire.png');
-
 }
 
 var player;
-var round, square;
 var wall;
 var killing;
 var fire;
@@ -20,6 +18,89 @@ var cursors;
 var background;
 var accelerator = 0;
 const accel_go  = 10;
+const square_speed = 200;
+
+const square = {
+    frame: 1,
+    moving: function () {
+        if (! player.body.touching.none)
+        {
+            player.body.velocity.x = 0;
+            player.body.velocity.y = 0;
+        }
+        if(player.body.velocity.x == 0 && player.body.velocity.y == 0)
+        {
+            if (cursors.left.isDown)
+            {
+                //  Move to the left
+                player.body.velocity.x = -square_speed;
+            }
+            if (cursors.right.isDown)
+            {
+                player.body.velocity.x += +square_speed;
+            }
+
+            if (cursors.up.isDown)
+            {
+                // up
+                player.body.velocity.y = -square_speed;
+            }
+            if (cursors.down.isDown)
+            {
+                player.body.velocity.y += +square_speed;
+            }
+        }
+    },
+    setup: function () {
+        //  Player physics properties.
+        player.body.bounce.y = 0;
+        player.body.bounce.x = 0;
+        player.body.gravity.y = 0;
+        player.body.collideWorldBounds = true;
+    }
+};
+
+const round = {
+    frame: 0,
+    moving: function () {
+        if (cursors.left.isDown)
+        {
+            //  Move to the left
+            player.body.velocity.x += -1;
+            if (accelerator > 0) accelerator = 0;
+            else if (accelerator < -accel_go)
+                player.body.velocity.x += -5;
+            else accelerator--;
+        }
+        else if (cursors.right.isDown)
+        {
+            player.body.velocity.x += 1;
+            if (accelerator < 0) accelerator = 0;
+            else if (accelerator > -accel_go)
+                player.body.velocity.x += 5;
+            else accelerator++;
+        }
+
+        //  Allow the player to jump if they are touching the ground.
+        if (cursors.up.isDown && player.body.touching.down)
+        {
+            player.body.velocity.y += -100;
+        }
+    },
+    setup: function () {
+        //  Player physics properties.
+        player.body.bounce.y = 0.9;
+        player.body.bounce.x = 0.9;
+        player.body.gravity.y = 300;
+        player.body.collideWorldBounds = true;
+    }
+};
+
+function shapeshift(form) {
+    player.frame = form.frame;
+    player.moving = form.moving;
+    form.setup();
+}
 
 function create() {
     //  We're going to be using physics, so enable the Arcade Physics system
@@ -71,11 +152,7 @@ function create() {
     //  We need to enable physics on the player
     game.physics.arcade.enable(player);
 
-    //  Player physics properties. Give the little guy a slight bounce.
-    player.body.bounce.y = 0.9;
-    player.body.bounce.x = 0.9;
-    player.body.gravity.y = 300;
-    player.body.collideWorldBounds = true;
+    shapeshift(square);
 
     //  Our controls.
     cursors = game.input.keyboard.createCursorKeys();
@@ -91,28 +168,5 @@ function update() {
         argg();                 // TODO: something...
     }
 
-    if (cursors.left.isDown)
-    {
-        //  Move to the left
-        player.body.velocity.x += -1;
-        if (accelerator > 0) accelerator = 0;
-        else if (accelerator < -accel_go)
-            player.body.velocity.x += -5;
-        else accelerator--;
-    }
-    else if (cursors.right.isDown)
-    {
-        player.body.velocity.x += 1;
-        if (accelerator < 0) accelerator = 0;
-        else if (accelerator > -accel_go)
-            player.body.velocity.x += 5;
-        else accelerator++;
-    }
-
-    //  Allow the player to jump if they are touching the ground.
-    if (cursors.up.isDown && player.body.touching.down)
-    {
-        player.body.velocity.y += -100;
-    }
-
+    player.moving();
 }
