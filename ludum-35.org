@@ -7,3 +7,14 @@
   - triangle to make the word turn
   - square for move vertically or horizontally until blocked
 - Maybe "eat" the different shape to gain them, or something like that
+* Outil
+Musique: [[http://boscaceoil.net/][boscaceoil]]
+* Roadmap
+** DONE better handling of speed when shapeshifting
+- State "DONE"       from "TODO"       [2016-04-17 dim. 00:58]
+** TODO shapeshift latter
+To let it seen that the shifter are non blocker
+** TODO restart level
+** TODO music
+** TODO sound
+** TODO levels (lot of)
