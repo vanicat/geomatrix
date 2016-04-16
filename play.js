@@ -6,7 +6,8 @@
 
 
 var player;
-var wall;
+var walls;
+var map;
 var killing;
 var fire;
 var cursors;
@@ -50,7 +51,6 @@ const square = {
         player.body.bounce.y = 0;
         player.body.bounce.x = 0;
         player.body.gravity.y = 0;
-        player.body.collideWorldBounds = true;
     }
 };
 
@@ -76,7 +76,7 @@ const round = {
         }
 
         //  Allow the player to jump if they are touching the ground.
-        if (cursors.up.isDown && player.body.touching.down)
+        if (cursors.up.isDown && player.body.blocked.down)
         {
             player.body.velocity.y += -100;
         }
@@ -86,7 +86,6 @@ const round = {
         player.body.bounce.y = 0.9;
         player.body.bounce.x = 0.9;
         player.body.gravity.y = 300;
-        player.body.collideWorldBounds = true;
     }
 };
 
@@ -101,50 +100,45 @@ var playState = {
         //  A simple background for our game
         background.addToWorld();
 
-        //  The wall group contain ground and wall
-        wall = game.add.group();
-        wall.enableBody = true;     // For physics
+        map = game.add.tilemap('level1');
+        map.addTilesetImage('wallTile', 'gameTiles');
 
-        // Here we create the ground.
-        var ground = wall.create(0, game.world.height - 64, 'ground');
+        map.setCollisionBetween(1, 16, true, 'walls');
 
-        //  This stops it from falling away when you jump on it
-        ground.body.immovable = true;
+        //create layer
+        walls = map.createLayer('walls');
+        walls.resizeWorld();
+        // walls.debug = true;
 
-        //  Now let's create two ledges
-        var ledge = wall.create(400, 400, 'ground');
-        ledge.body.immovable = true;
+        // // Dangerous stuff
 
-        ledge = wall.create(-150, 250, 'ground');
-        ledge.body.immovable = true;
+        // killing = game.add.group();
+        // killing.enableBody = true;
 
-
-        // Dangerous stuff
-        killing = game.add.group();
-        killing.enableBody = true;
-
-        // The bottom fire: it will kill you
-        //  TODO: it doesn't
-        fire = game.add.tileSprite(0,game.world.height-32,game.world.width,game.world.height,'fire');
-        killing.add(fire);
-        fire.body.immovable = true;
+        // // The bottom fire: it will kill you
+        // //  TODO: it doesn't
+        // fire = game.add.tileSprite(0,game.world.height-32,game.world.width,game.world.height,'fire');
+        // killing.add(fire);
+        // fire.body.immovable = true;
 
         // The player and its settings
         player = game.add.sprite(32, game.world.height - 150, 'rolling');
 
         //  We need to enable physics on the player
         game.physics.arcade.enable(player);
+        player.body.collideWorldBounds = true;
 
-        shapeshift(square);
+        shapeshift(round);
+
+        game.camera.follow(player); // Mmm...
 
         //  Our controls.
         cursors = game.input.keyboard.createCursorKeys();
     },
 
     update: function() {
-
         //  Collide the player and the stars with the wall
-        game.physics.arcade.collide(player, wall);
+        game.physics.arcade.collide(player, walls);
 
         if (game.physics.arcade.collide(player, killing))
         {
