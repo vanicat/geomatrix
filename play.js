@@ -7,6 +7,8 @@
 
 var player;
 var walls;
+var shifting;
+var exit;
 var map;
 var killing;
 var fire;
@@ -110,6 +112,18 @@ var playState = {
         walls.resizeWorld();
         // walls.debug = true;
 
+        // Shifting stuff
+        shifting = game.add.group();
+        for(var i = 0; i < 7; i++)
+        {
+            map.createFromObjects('objects', 18 + i , 'objects', i, true, false, shifting);
+        }
+
+        // exit
+        exit = game.add.group();
+        exit.enableBody = true;
+        map.createFromObjects('objects', 17, 'objects', 7, true, false, exit);
+
         // // Dangerous stuff
 
         // killing = game.add.group();
@@ -142,7 +156,12 @@ var playState = {
 
         if (game.physics.arcade.collide(player, killing))
         {
-            argg();                 // TODO: something...
+            game.state.start('menu');
+        }
+
+        if (game.physics.arcade.overlap(player, exit))
+        {
+            game.state.start('menu');
         }
 
         player.moving();
