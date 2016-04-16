@@ -21,6 +21,6 @@ var bootState = {
         background.rect(0,0,800,600, grd);
         background.fill();
 
-        game.state.start('play');
+        game.state.start('menu');
     }
 };
