@@ -46,20 +46,33 @@
 </data>
  </layer>
  <objectgroup name="objects">
-  <object type="transform" gid="17" x="688" y="240">
-   <properties>
-    <property name="transform" value="square"/>
-   </properties>
-  </object>
-  <object gid="20" x="256" y="224"/>
-  <object gid="20" x="256" y="224"/>
-  <object gid="24" x="256" y="240"/>
-  <object gid="24" x="256" y="256"/>
-  <object gid="24" x="256" y="272"/>
-  <object gid="24" x="256" y="288"/>
-  <object gid="24" x="256" y="304"/>
-  <object gid="24" x="256" y="304"/>
-  <object gid="24" x="256" y="320"/>
-  <object gid="22" x="256" y="336"/>
+  <object type="exit" gid="17" x="688" y="240"/>
+  <object type="transform" gid="20" x="256" y="224"/>
+  <object type="transform" gid="24" x="256" y="240"/>
+  <object type="transform" gid="24" x="256" y="256"/>
+  <object type="transform" gid="24" x="256" y="272"/>
+  <object type="transform" gid="24" x="256" y="288"/>
+  <object type="transform" gid="24" x="256" y="304"/>
+  <object type="transform" gid="24" x="256" y="304"/>
+  <object type="transform" gid="24" x="256" y="320"/>
+  <object type="transform" gid="22" x="256" y="336"/>
+  <object type="transform" gid="25" x="544" y="592"/>
+  <object type="fire" gid="25" x="560" y="592"/>
+  <object type="fire" gid="25" x="576" y="592"/>
+  <object type="fire" gid="25" x="592" y="592"/>
+  <object type="fire" gid="25" x="624" y="592"/>
+  <object type="fire" gid="25" x="624" y="592"/>
+  <object type="fire" gid="25" x="624" y="592"/>
+  <object type="fire" gid="25" x="608" y="592"/>
+  <object type="fire" gid="25" x="640" y="592"/>
+  <object type="fire" gid="25" x="656" y="592"/>
+  <object type="fire" gid="25" x="672" y="592"/>
+  <object type="fire" gid="25" x="688" y="592"/>
+  <object type="fire" gid="25" x="704" y="592"/>
+  <object type="fire" gid="25" x="720" y="592"/>
+  <object type="fire" gid="25" x="752" y="592"/>
+  <object type="fire" gid="25" x="736" y="592"/>
+  <object type="fire" gid="25" x="768" y="592"/>
+  <object type="fire" gid="25" x="784" y="592"/>
  </objectgroup>
 </map>

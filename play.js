@@ -124,16 +124,12 @@ var playState = {
         exit.enableBody = true;
         map.createFromObjects('objects', 17, 'objects', 7, true, false, exit);
 
-        // // Dangerous stuff
+        // Dangerous stuff
 
-        // killing = game.add.group();
-        // killing.enableBody = true;
+        killing = game.add.group();
+        killing.enableBody = true;
 
-        // // The bottom fire: it will kill you
-        // //  TODO: it doesn't
-        // fire = game.add.tileSprite(0,game.world.height-32,game.world.width,game.world.height,'fire');
-        // killing.add(fire);
-        // fire.body.immovable = true;
+        map.createFromObjects('objects', 25, 'objects', 8, true, false, exit);
 
         // The player and its settings
         player = game.add.sprite(32, game.world.height - 150, 'rolling');
