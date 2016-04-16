@@ -10,7 +10,6 @@ var wall;
 var killing;
 var fire;
 var cursors;
-var background;
 var accelerator = 0;
 const accel_go  = 10;
 const square_speed = 200;
@@ -98,26 +97,9 @@ function shapeshift(form) {
 }
 
 var playState = {
-    preload: function () {
-        game.load.image('ground', 'assets/platform.png');
-        game.load.spritesheet('rolling', 'assets/rolling.png', 20, 20);
-        game.load.image('fire', 'assets/fire.png');
-    },
     create: function() {
-        //  We're going to be using physics, so enable the Arcade Physics system
-        // TODO: maybe use another mode...
-        game.physics.startSystem(Phaser.Physics.ARCADE);
-
         //  A simple background for our game
-        background = game.make.bitmapData(800, 600);
         background.addToWorld();
-        var grd = background.context.createLinearGradient(400,0,400,600);
-        grd.addColorStop(0, '#8ED6FF');
-        grd.addColorStop(1, '#003BA2');
-
-        background.cls();
-        background.rect(0,0,800,600, grd);
-        background.fill();
 
         //  The wall group contain ground and wall
         wall = game.add.group();
