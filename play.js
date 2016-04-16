@@ -126,7 +126,7 @@ var playState = {
         this.killing = game.add.group();
         this.killing.enableBody = true;
 
-        map.createFromObjects('objects', 25, 'objects', 8, true, false, this.exit);
+        map.createFromObjects('objects', 25, 'objects', 8, true, false, this.killing);
 
         // The player and its settings
         this.player = game.add.sprite(32, game.world.height - 150, 'rolling');
@@ -149,12 +149,12 @@ var playState = {
 
         if (game.physics.arcade.collide(this.player, this.killing))
         {
-            game.state.start('menu');
+            game.state.start('play');
         }
 
         if (game.physics.arcade.overlap(this.player, this.exit))
         {
-            game.state.start('menu');
+             game.state.start('menu');
         }
 
         this.player.moving();
