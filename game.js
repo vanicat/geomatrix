@@ -5,7 +5,6 @@
 */
 
 function preload() {
-
     game.load.image('ground', 'assets/platform.png');
     game.load.image('rolling', 'assets/rolling.png');
     game.load.image('fire', 'assets/fire.png');
@@ -15,6 +14,8 @@ function preload() {
 var player;
 var round, square;
 var wall;
+var killing;
+var fire;
 var cursors;
 var background;
 var accelerator = 0;
@@ -53,6 +54,17 @@ function create() {
     ledge = wall.create(-150, 250, 'ground');
     ledge.body.immovable = true;
 
+
+    // Dangerous stuff
+    killing = game.add.group();
+    killing.enableBody = true;
+
+    // The bottom fire: it will kill you
+    //  TODO: it doesn't
+    fire = game.add.tileSprite(0,game.world.height-32,game.world.width,game.world.height,'fire');
+    killing.add(fire);
+    fire.body.immovable = true;
+
     // The player and its settings
     player = game.add.sprite(32, game.world.height - 150, 'rolling');
 
@@ -73,6 +85,11 @@ function update() {
 
     //  Collide the player and the stars with the wall
     game.physics.arcade.collide(player, wall);
+
+    if (game.physics.arcade.collide(player, killing))
+    {
+        argg();                 // TODO: something...
+    }
 
     if (cursors.left.isDown)
     {
