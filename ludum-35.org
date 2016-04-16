@@ -1,0 +1,9 @@
+#+title: Ludum Dare 35: Shapeshift
+
+* Idea
+- Geometric shape with different properties
+  - a gear like form to climb wall
+  - a round form to bounce...
+  - triangle to make the word turn
+  - square for move vertically or horizontally until blocked
+- Maybe "eat" the different shape to gain them, or something like that
