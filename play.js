@@ -8,7 +8,7 @@ var cursors;
 const accel_go  = 10;
 const square_speed = 200;
 
-const shape = {
+const shapes = {
     square: {
         frame: 1,
         moving: function () {
@@ -40,8 +40,7 @@ const shape = {
             this.body.bounce.y = 0;
             this.body.bounce.x = 0;
             this.body.gravity.y = 0;
-            this.body.velocity.x = 0;
-            this.body.velocity.y = 0;
+            this.shape = 'square';
         }
     },
 
@@ -77,19 +76,24 @@ const shape = {
             this.body.bounce.y = 0.9;
             this.body.bounce.x = 0.9;
             this.body.gravity.y = 300;
-            this.body.velocity.x = 0;
-            this.body.velocity.y = 0;
             this.accelerator = 0;
+            this.shape = 'round';
         }
     }
 };
 
 var playState = {
     shapeshift: function (form) {
-        this.player.frame = form.frame;
-        this.player.moving = form.moving;
-        this.player.setup = form.setup;
-        this.player.setup();
+        if (! (this.player.shape == form))
+        {
+            var shape = shapes[form];
+            this.player.frame = shape.frame;
+            this.player.moving = shape.moving;
+            this.player.setup = shape.setup;
+            this.player.setup();
+            this.player.body.velocity.x = 0;
+            this.player.body.velocity.y = 0;
+        }
     },
 
     create: function() {
@@ -133,7 +137,7 @@ var playState = {
         game.physics.arcade.enable(this.player);
         this.player.body.collideWorldBounds = true;
 
-        this.shapeshift(shape['round']);
+        this.shapeshift('round');
 
         game.camera.follow(this.player); // Mmm...
 
@@ -142,7 +146,7 @@ var playState = {
     },
 
     update: function() {
-        //  Collide the player and the stars with the wall
+        //  Collide the player with the wall
         game.physics.arcade.collide(this.player, this.walls);
 
         if (game.physics.arcade.collide(this.player, this.killing))
@@ -161,7 +165,7 @@ var playState = {
                                   {
                                       if (! x.body.touching.none)
                                       {
-                                          this.shapeshift(shape[x.transform_to]);
+                                          this.shapeshift(x.transform_to);
                                       }
                                   }, this);
         }
