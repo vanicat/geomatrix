@@ -8,82 +8,84 @@ var cursors;
 const accel_go  = 10;
 const square_speed = 200;
 
-const square = {
-    frame: 1,
-    moving: function () {
-        if (! this.body.touching.none)
-        {
+const shape = {
+    square: {
+        frame: 1,
+        moving: function () {
+            if (! this.body.touching.none)
+            {
+                this.body.velocity.x = 0;
+                this.body.velocity.y = 0;
+            }
+            if(this.body.velocity.x == 0 && this.body.velocity.y == 0)
+            {
+                if (cursors.left.isDown)
+                {
+                    //  Move to the left
+                    this.body.velocity.x = -square_speed;
+                }
+                if (cursors.right.isDown)
+                {
+                    this.body.velocity.x += +square_speed;
+                }
+
+                if (cursors.up.isDown)
+                {
+                    // up
+                    this.body.velocity.y = -square_speed;
+                }
+                if (cursors.down.isDown)
+                {
+                    this.body.velocity.y += +square_speed;
+                }
+            }
+        },
+        setup: function () {
+            //  This physics properties.
+            this.body.bounce.y = 0;
+            this.body.bounce.x = 0;
+            this.body.gravity.y = 0;
             this.body.velocity.x = 0;
             this.body.velocity.y = 0;
         }
-        if(this.body.velocity.x == 0 && this.body.velocity.y == 0)
-        {
+    },
+
+    round : {
+        frame: 0,
+        moving: function () {
             if (cursors.left.isDown)
             {
                 //  Move to the left
-                this.body.velocity.x = -square_speed;
+                this.body.velocity.x += -1;
+                if (this.accelerator > 0) this.accelerator = 0;
+                else if (this.accelerator < -accel_go)
+                    this.body.velocity.x += -5;
+                else this.accelerator--;
             }
-            if (cursors.right.isDown)
+            else if (cursors.right.isDown)
             {
-                this.body.velocity.x += +square_speed;
+                this.body.velocity.x += 1;
+                if (this.accelerator < 0) this.accelerator = 0;
+                else if (this.accelerator > -accel_go)
+                    this.body.velocity.x += 5;
+                else this.accelerator++;
             }
 
-            if (cursors.up.isDown)
+            //  Allow the this to jump if they are touching the ground.
+            if (cursors.up.isDown && this.body.blocked.down)
             {
-                // up
-                this.body.velocity.y = -square_speed;
+                this.body.velocity.y += -100;
             }
-            if (cursors.down.isDown)
-            {
-                this.body.velocity.y += +square_speed;
-            }
+        },
+        setup: function () {
+            //  Player physics properties.
+            this.body.bounce.y = 0.9;
+            this.body.bounce.x = 0.9;
+            this.body.gravity.y = 300;
+            this.body.velocity.x = 0;
+            this.body.velocity.y = 0;
+            this.accelerator = 0;
         }
-    },
-    setup: function () {
-        //  This physics properties.
-        this.body.bounce.y = 0;
-        this.body.bounce.x = 0;
-        this.body.gravity.y = 0;
-        this.body.velocity.x = 0;
-        this.body.velocity.y = 0;
-    }
-};
-
-const round = {
-    frame: 0,
-    moving: function () {
-        if (cursors.left.isDown)
-        {
-            //  Move to the left
-            this.body.velocity.x += -1;
-            if (this.accelerator > 0) this.accelerator = 0;
-            else if (this.accelerator < -accel_go)
-                this.body.velocity.x += -5;
-            else this.accelerator--;
-        }
-        else if (cursors.right.isDown)
-        {
-            this.body.velocity.x += 1;
-            if (this.accelerator < 0) this.accelerator = 0;
-            else if (this.accelerator > -accel_go)
-                this.body.velocity.x += 5;
-            else this.accelerator++;
-        }
-
-        //  Allow the this to jump if they are touching the ground.
-        if (cursors.up.isDown && this.body.blocked.down)
-        {
-            this.body.velocity.y += -100;
-        }
-    },
-    setup: function () {
-        //  Player physics properties.
-        this.body.bounce.y = 0.9;
-        this.body.bounce.x = 0.9;
-        this.body.gravity.y = 300;
-        this.body.velocity.x = 0;
-        this.body.velocity.y = 0;
-        this.accelerator = 0;
     }
 };
 
@@ -111,6 +113,7 @@ var playState = {
 
         // Shifting stuff
         this.shifting = game.add.group();
+        this.shifting.enableBody = true;
         for(var i = 0; i < 7; i++)
         {
             map.createFromObjects('objects', 18 + i , 'objects', i, true, false, this.shifting);
@@ -135,7 +138,7 @@ var playState = {
         game.physics.arcade.enable(this.player);
         this.player.body.collideWorldBounds = true;
 
-        this.shapeshift(round);
+        this.shapeshift(shape['round']);
 
         game.camera.follow(this.player); // Mmm...
 
@@ -155,6 +158,17 @@ var playState = {
         if (game.physics.arcade.overlap(this.player, this.exit))
         {
              game.state.start('menu');
+        }
+
+        if (game.physics.arcade.overlap(this.player, this.shifting))
+        {
+            this.shifting.forEach(function(x)
+                                  {
+                                      if (! x.body.touching.none)
+                                      {
+                                          this.shapeshift(shape[x.transform_to]);
+                                      }
+                                  }, this);
         }
 
         this.player.moving();
