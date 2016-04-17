@@ -9,11 +9,12 @@ var map;
 const accel_go  = 10;
 const square_speed = 200;
 const star_speed = 30;
-const nblevel = 2;
 const levels = [
     "level1",
-    "level2"
+    "level2",
+    "level3"
 ];
+const nblevel = levels.length;
 var cur_level = 0;
 
 
@@ -70,13 +71,16 @@ var playState = {
         this.stuff = game.add.group();
         this.stuff.enableBody = true;
 
-        map.createFromObjects('objects', 64, 'objects', 63, true, false, this.stuff);
+        for(var i = 0; i<2; i++)
+        {
+            map.createFromObjects('objects', 64-i, 'objects', 63-i, true, false, this.stuff);
+        }
 
         this.player_start_x = 32;
         this.player_start_y = game.world.height - 150;
 
         var obj = map.objects.objects;
-        for(var i = 0 in obj)
+        for(var i in obj)
         {
             if (obj[i].gid == 33)
             {
@@ -118,6 +122,14 @@ var playState = {
         game.physics.arcade.collide(this.player, this.stuff);
         game.physics.arcade.collide(this.stuff, this.walls);
         game.physics.arcade.collide(this.stuff, this.stuff);
+
+        this.stuff.forEach(
+            function(s) {
+                if(s.slowdown) {
+                    s.body.velocity.x *= s.slowdown;
+                    s.body.velocity.y *= s.slowdown;
+                }
+            });
 
         if (game.physics.arcade.collide(this.player, this.killing))
         {
