@@ -20,3 +20,4 @@ To let it seen that the shifter are non blocker
 ** DONE sound
 - State "DONE"       from "TODO"       [2016-04-17 dim. 12:35]
 ** TODO levels (lot of)
+- make a wall arround it...
