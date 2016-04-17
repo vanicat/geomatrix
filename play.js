@@ -261,14 +261,7 @@ var playState = {
         this.walls = map.createLayer('walls');
         this.walls.resizeWorld();
 
-        background.resize(game.world.width,game.world.height);
-        var grd = background.context.createLinearGradient(game.world.width/2,0,game.world.width/2,game.world.height);
-        grd.addColorStop(0, '#8ED6FF');
-        grd.addColorStop(1, '#003BA2');
-
-        background.cls();
-        background.rect(0,0,game.world.width,game.world.height, grd);
-        background.fill();
+        background.autoResize();
 
         // walls.debug = true;
 

@@ -25,13 +25,17 @@ var bootState = {
         game.physics.startSystem(Phaser.Physics.ARCADE);
         background = game.make.bitmapData(800, 600);
 
-        var grd = background.context.createLinearGradient(400,0,400,600);
-        grd.addColorStop(0, '#8ED6FF');
-        grd.addColorStop(1, '#003BA2');
+        background.autoResize = function ()
+        {
+            background.resize(game.world.width,game.world.height);
+            var grd = background.context.createLinearGradient(game.world.width/2,0,game.world.width/2,game.world.height);
+            grd.addColorStop(0, '#8ED6FF');
+            grd.addColorStop(1, '#003BA2');
 
-        background.cls();
-        background.rect(0,0,800,600, grd);
-        background.fill();
+            background.cls();
+            background.rect(0,0,game.world.width,game.world.height, grd);
+            background.fill();
+        };
 
         music = game.add.audio('music',1,true);
         music.play();
