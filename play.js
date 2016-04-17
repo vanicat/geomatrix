@@ -7,6 +7,7 @@
 var cursors;
 const accel_go  = 10;
 const square_speed = 200;
+const nblevel = 2;
 const levels = [
     "level1",
     "level2"
@@ -172,21 +173,27 @@ var playState = {
 
         map.createFromObjects('objects', 25, 'objects', 24, true, false, this.killing);
 
-        this.player = null;
+        this.player_start_x = 32;
+        this.player_start_y = game.world.height - 150;
+
 
         var obj = map.objects.objects;
         for(var i = 0 in obj)
         {
             if (obj[i].gid == 33)
-                this.player = game.add.sprite(obj[i].x, obj[i].y, 'rolling');
+            {
+                this.player_start_x = obj[i].x;
+                this.player_start_y = obj[i].y;
+            }
         }
-        if (! this.player)
-            this.player = game.add.sprite(32, game.world.height - 150, 'rolling');
+
+        this.player = game.add.sprite(this.player_start_x, this.player_start_y, 'rolling');
 
         // The player and its settings
 
         //  We need to enable physics on the player
         game.physics.arcade.enable(this.player);
+        this.player.body.setSize(14,14,1,1);
         this.player.body.collideWorldBounds = true;
 
         this.shapeshift('round');
@@ -215,7 +222,16 @@ var playState = {
         if (game.physics.arcade.overlap(this.player, this.exit))
         {
             sound.clang.play();
-            game.state.start('menu');
+            cur_level++;
+            if (cur_level < nblevel)
+            {
+                game.state.start('play');
+            }
+            else
+            {
+                cur_level = 0;
+                game.state.start('menu');
+            }
         }
 
         for (var dest in this.shifting)
@@ -235,6 +251,7 @@ var playState = {
             game.state.start('play');
         };
         if (cursors.esc.isDown) {
+            cur_level = 0;
             game.state.start('menu');
         };
     }

@@ -8,6 +8,7 @@ var bootState = {
         game.load.spritesheet('rolling', 'assets/rolling.png', 16, 16);
 
         game.load.tilemap('level1', 'assets/leve1.json', null, Phaser.Tilemap.TILED_JSON);
+        game.load.tilemap('level2', 'assets/leve2.json', null, Phaser.Tilemap.TILED_JSON);
         game.load.image('gameTiles', 'assets/walls.png');
         game.load.spritesheet('objects', 'assets/walls.png', 16, 16);
 
