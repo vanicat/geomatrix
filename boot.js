@@ -6,10 +6,11 @@ var bootState = {
     preload: function () {
         game.load.image('ground', 'assets/platform.png');
         game.load.spritesheet('rolling', 'assets/rolling.png', 20, 20);
-        game.load.spritesheet('objects', 'assets/objects.png', 16, 16);
 
         game.load.tilemap('level1', 'assets/leve1.json', null, Phaser.Tilemap.TILED_JSON);
         game.load.image('gameTiles', 'assets/walls.png');
+        game.load.spritesheet('objects', 'assets/walls.png', 16, 16);
+
         game.load.audio('music', ['assets/audio/music.mp3', 'assets/audio/music.ogg']);
         game.load.audio('bang', ['assets/audio/bang.mp3', 'assets/audio/bang.ogg']);
         game.load.audio('clang', ['assets/audio/clang.mp3', 'assets/audio/clang.ogg']);

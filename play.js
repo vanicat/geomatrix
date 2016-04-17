@@ -133,30 +133,39 @@ var playState = {
         // walls.debug = true;
 
         // Shifting stuff
-        this.shifting = game.add.group();
-        this.shifting.enableBody = true;
+        this.shifting = {};
+        this.shifting.square = game.add.group();
+        this.shifting.square.enableBody = true;
         for(var i = 0; i < 7; i++)
         {
-            map.createFromObjects('objects', 18 + i , 'objects', i, true, false, this.shifting);
+            map.createFromObjects('objects', 18 + i , 'objects', 17+i, true, false, this.shifting.square);
         }
-        this.shifting.forEach(
-            function(child) {
-                child.body.setSize(8,8,4,4);
-            }
-        );
 
+        this.shifting.round = game.add.group();
+        this.shifting.round.enableBody = true;
+        for(var i = 0; i < 7; i++)
+        {
+            map.createFromObjects('objects', 26 + i , 'objects', 25+i, true, false, this.shifting.round);
+        }
+        for(var dest in this.shifting)
+        {
+            this.shifting[dest].forEach(
+                function(child) {
+                    child.body.setSize(8,8,4,4);
+                });
+        }
 
         // exit
         this.exit = game.add.group();
         this.exit.enableBody = true;
-        map.createFromObjects('objects', 17, 'objects', 7, true, false, this.exit);
+        map.createFromObjects('objects', 17, 'objects', 16, true, false, this.exit);
 
         // Dangerous stuff
 
         this.killing = game.add.group();
         this.killing.enableBody = true;
 
-        map.createFromObjects('objects', 25, 'objects', 8, true, false, this.killing);
+        map.createFromObjects('objects', 25, 'objects', 24, true, false, this.killing);
 
         // The player and its settings
         this.player = game.add.sprite(32, game.world.height - 150, 'rolling');
@@ -194,15 +203,12 @@ var playState = {
             game.state.start('menu');
         }
 
-        if (game.physics.arcade.overlap(this.player, this.shifting))
+        for (var dest in this.shifting)
         {
-            this.shifting.forEach(function(x)
-                                  {
-                                      if (! x.body.touching.none)
-                                      {
-                                          this.shapeshift(x.transform_to);
-                                      }
-                                  }, this);
+            if (game.physics.arcade.overlap(this.player, this.shifting[dest]))
+            {
+                this.shapeshift(dest);
+            }
         }
 
         if (! this.blocked)
