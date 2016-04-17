@@ -61,15 +61,19 @@ var playState = {
         map.createFromObjects('objects', 17, 'objects', 16, true, false, this.exit);
 
         // Dangerous stuff
-
         this.killing = game.add.group();
         this.killing.enableBody = true;
 
         map.createFromObjects('objects', 25, 'objects', 24, true, false, this.killing);
 
+        // OtherStuff
+        this.stuff = game.add.group();
+        this.stuff.enableBody = true;
+
+        map.createFromObjects('objects', 64, 'objects', 63, true, false, this.stuff);
+
         this.player_start_x = 32;
         this.player_start_y = game.world.height - 150;
-
 
         var obj = map.objects.objects;
         for(var i = 0 in obj)
@@ -110,6 +114,10 @@ var playState = {
         {
             this.player.bouncing();
         }
+
+        game.physics.arcade.collide(this.player, this.stuff);
+        game.physics.arcade.collide(this.stuff, this.walls);
+        game.physics.arcade.collide(this.stuff, this.stuff);
 
         if (game.physics.arcade.collide(this.player, this.killing))
         {
