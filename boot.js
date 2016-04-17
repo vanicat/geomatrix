@@ -1,4 +1,5 @@
 var background;
+var music;
 
 var bootState = {
     preload: function () {
@@ -8,6 +9,7 @@ var bootState = {
 
         game.load.tilemap('level1', 'assets/leve1.json', null, Phaser.Tilemap.TILED_JSON);
         game.load.image('gameTiles', 'assets/walls.png');
+        game.load.audio('music', ['assets/audio/music.mp3', 'assets/audio/music.ogg']);
     },
 
     create: function () {
@@ -23,6 +25,9 @@ var bootState = {
         background.cls();
         background.rect(0,0,800,600, grd);
         background.fill();
+
+        music = game.add.audio('music',1,true);
+        music.play();
 
         game.state.start('menu');
     }
