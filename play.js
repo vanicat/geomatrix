@@ -139,6 +139,12 @@ var playState = {
         {
             map.createFromObjects('objects', 18 + i , 'objects', i, true, false, this.shifting);
         }
+        this.shifting.forEach(
+            function(child) {
+                child.body.setSize(8,8,4,4);
+            }
+        );
+
 
         // exit
         this.exit = game.add.group();
