@@ -1,5 +1,6 @@
 var background;
 var music;
+var sound = {};
 
 var bootState = {
     preload: function () {
@@ -10,6 +11,9 @@ var bootState = {
         game.load.tilemap('level1', 'assets/leve1.json', null, Phaser.Tilemap.TILED_JSON);
         game.load.image('gameTiles', 'assets/walls.png');
         game.load.audio('music', ['assets/audio/music.mp3', 'assets/audio/music.ogg']);
+        game.load.audio('bang', ['assets/audio/bang.mp3', 'assets/audio/bang.ogg']);
+        game.load.audio('clang', ['assets/audio/clang.mp3', 'assets/audio/clang.ogg']);
+        game.load.audio('explo', ['assets/audio/explode.mp3', 'assets/audio/explode.ogg']);
     },
 
     create: function () {
@@ -28,6 +32,10 @@ var bootState = {
 
         music = game.add.audio('music',1,true);
         music.play();
+
+        sound.bang = game.add.audio('bang',1,false);
+        sound.clang = game.add.audio('clang',1,false);
+        sound.explosion = game.add.audio('explo',1,false);
 
         game.state.start('menu');
     }

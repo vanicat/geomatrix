@@ -41,6 +41,9 @@ const shapes = {
             this.body.bounce.x = 0;
             this.body.gravity.y = 0;
             this.shape = 'square';
+        },
+        bouncing: function () {
+            sound.bang.play();
         }
     },
 
@@ -78,6 +81,13 @@ const shapes = {
             this.body.gravity.y = 300;
             this.accelerator = 0;
             this.shape = 'round';
+        },
+        bouncing: function () {
+            if ( (this.body.blocked.up && this.body.velocity.y > 10) ||
+                 (this.body.blocked.down && this.body.velocity.y < -10) ||
+                 (this.body.blocked.left && this.body.velocity.x > 10) ||
+                 (this.body.blocked.right && this.body.velocity.x < -10) )
+            sound.bang.play();
         }
     }
 };
@@ -90,6 +100,7 @@ var playState = {
             this.player.frame = shape.frame;
             this.player.moving = shape.moving;
             this.player.setup = shape.setup;
+            this.player.bouncing = shape.bouncing;
             this.player.setup();
             this.player.body.velocity.x = 0;
             this.player.body.velocity.y = 0;
@@ -149,16 +160,21 @@ var playState = {
 
     update: function() {
         //  Collide the player with the wall
-        game.physics.arcade.collide(this.player, this.walls);
+        if (game.physics.arcade.collide(this.player, this.walls))
+        {
+            this.player.bouncing();
+        }
 
         if (game.physics.arcade.collide(this.player, this.killing))
         {
+            sound.explosion.play();
             game.state.start('play');
         }
 
         if (game.physics.arcade.overlap(this.player, this.exit))
         {
-             game.state.start('menu');
+            sound.clang.play();
+            game.state.start('menu');
         }
 
         if (game.physics.arcade.overlap(this.player, this.shifting))
