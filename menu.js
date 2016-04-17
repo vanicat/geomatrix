@@ -14,6 +14,7 @@ var menuState = {
     },
     next: function()
     {
+        sound.clang.play();
         game.state.start('play');
     },
     mute: function()
