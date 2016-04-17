@@ -266,37 +266,7 @@ var playState = {
         // walls.debug = true;
 
         // Shifting stuff
-        this.shifting = {};
-
-        this.shifting.square = game.add.group();
-        this.shifting.square.enableBody = true;
-        for(var i = 0; i < 7; i++)
-        {
-            map.createFromObjects('objects', 18 + i , 'objects', 17+i, true, false, this.shifting.square);
-        }
-
-        this.shifting.round = game.add.group();
-        this.shifting.round.enableBody = true;
-        for(var i = 0; i < 7; i++)
-        {
-            map.createFromObjects('objects', 26 + i , 'objects', 25+i, true, false, this.shifting.round);
-        }
-
-        this.shifting.star = game.add.group();
-        this.shifting.star.enableBody = true;
-        for(var i = 0; i < 7; i++)
-        {
-            map.createFromObjects('objects', 34 + i , 'objects', 33+i, true, false, this.shifting.star);
-        }
-
-        // To not make shifting look like wall
-        for(var dest in this.shifting)
-        {
-            this.shifting[dest].forEach(
-                function(child) {
-                    child.body.setSize(8,8,4,4);
-                });
-        }
+        this.shiftingCreate();
 
         // exit
         this.exit = game.add.group();
@@ -395,5 +365,39 @@ var playState = {
             cur_level = 0;
             game.state.start('menu');
         };
+    },
+
+    shiftingCreate: function() {
+        this.shifting = {};
+
+        this.shifting.square = game.add.group();
+        this.shifting.square.enableBody = true;
+        for(var i = 0; i < 7; i++)
+        {
+            map.createFromObjects('objects', 18 + i , 'objects', 17+i, true, false, this.shifting.square);
+        }
+
+        this.shifting.round = game.add.group();
+        this.shifting.round.enableBody = true;
+        for(var i = 0; i < 7; i++)
+        {
+            map.createFromObjects('objects', 26 + i , 'objects', 25+i, true, false, this.shifting.round);
+        }
+
+        this.shifting.star = game.add.group();
+        this.shifting.star.enableBody = true;
+        for(var i = 0; i < 7; i++)
+        {
+            map.createFromObjects('objects', 34 + i , 'objects', 33+i, true, false, this.shifting.star);
+        }
+
+        // To not make shifting look like wall
+        for(var dest in this.shifting)
+        {
+            this.shifting[dest].forEach(
+                function(child) {
+                    child.body.setSize(8,8,4,4);
+                });
+        }
     }
 };
