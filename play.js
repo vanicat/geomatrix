@@ -43,7 +43,7 @@ const shapes = {
             this.shape = 'square';
         },
         bouncing: function () {
-            sound.bang.play();
+            sound.bing.play();
         }
     },
 

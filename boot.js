@@ -13,6 +13,7 @@ var bootState = {
         game.load.audio('music', ['assets/audio/music.mp3', 'assets/audio/music.ogg']);
         game.load.audio('bang', ['assets/audio/bang.mp3', 'assets/audio/bang.ogg']);
         game.load.audio('clang', ['assets/audio/clang.mp3', 'assets/audio/clang.ogg']);
+        game.load.audio('bing', ['assets/audio/bing.mp3', 'assets/audio/bing.ogg']);
         game.load.audio('explo', ['assets/audio/explode.mp3', 'assets/audio/explode.ogg']);
     },
 
@@ -34,6 +35,7 @@ var bootState = {
         music.play();
 
         sound.bang = game.add.audio('bang',1,false);
+        sound.bing = game.add.audio('bing',1,false);
         sound.clang = game.add.audio('clang',1,false);
         sound.explosion = game.add.audio('explo',1,false);
 
