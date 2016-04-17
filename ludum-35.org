@@ -14,7 +14,8 @@ Musique: [[http://boscaceoil.net/][boscaceoil]]
 - State "DONE"       from "TODO"       [2016-04-17 dim. 00:58]
 ** TODO shapeshift latter
 To let it seen that the shifter are non blocker
-** TODO restart level
+** DONE restart level
+- State "DONE"       from "TODO"       [2016-04-17 dim. 01:10]
 ** TODO music
 ** TODO sound
 ** TODO levels (lot of)

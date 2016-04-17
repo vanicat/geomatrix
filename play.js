@@ -143,6 +143,8 @@ var playState = {
 
         //  Our controls.
         cursors = game.input.keyboard.createCursorKeys();
+        cursors.enter = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+        cursors.esc = game.input.keyboard.addKey(Phaser.Keyboard.ESC);
     },
 
     update: function() {
@@ -171,5 +173,12 @@ var playState = {
         }
 
         this.player.moving();
+
+        if (cursors.enter.isDown) {
+            game.state.start('play');
+        };
+        if (cursors.esc.isDown) {
+            game.state.start('menu');
+        };
     }
 };
