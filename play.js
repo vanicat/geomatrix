@@ -5,8 +5,10 @@
 */
 
 var cursors;
+var map;
 const accel_go  = 10;
 const square_speed = 200;
+const star_speed = 30;
 const nblevel = 2;
 const levels = [
     "level1",
@@ -94,6 +96,137 @@ const shapes = {
                  (this.body.blocked.right && this.body.velocity.x < -10) )
             sound.bang.play();
         }
+    },
+
+    star : {
+        frame: 2,
+        moving: function () {
+            if (cursors.left.isDown)
+            {
+                this.animations.play('left');
+                this.direction = -1;
+            }
+            else if (cursors.right.isDown)
+            {
+                this.animations.play('right');
+                this.direction = 1;
+            }
+
+            var touching = false;
+
+            var vx = 0;
+            var vy = 0;
+            var gx = 0;
+            var gy = 0;
+
+            if (map.getTileWorldXY((this.left+this.right)/2,
+                                   this.bottom+3))
+            {
+                // console.log('down');
+                touching = true;
+                vx += star_speed * this.direction;
+                vy += 0  * this.direction;
+                gx += 0;
+                gy += 300;
+            }
+            if (map.getTileWorldXY(this.left-3,
+                                   (this.top+this.bottom)/2))
+            {
+                // console.log('left');
+                touching = true;
+                vx += 0 * this.direction;
+                vy += star_speed  * this.direction;
+                gx += -300;
+                gy += 0;
+            }
+            if (map.getTileWorldXY((this.left+this.right)/2,
+                                   this.top-3))
+            {
+                // console.log('up');
+                touching = true;
+                vx += -star_speed * this.direction;
+                vy += 0  * this.direction;
+                gx += 0;
+                gy += -300;
+            }
+            if (map.getTileWorldXY(this.right+3,
+                                   (this.top+this.bottom)/2))
+            {
+                // console.log('right');
+                touching = true;
+                vx += 0  * this.direction;
+                vy += -star_speed * this.direction;
+                gx += 300;
+                gy += 0;
+            }
+
+            if (!touching)
+            {
+                if (map.getTileWorldXY(this.left-3,
+                                       this.bottom+3))
+                {
+                    // console.log('down left');
+                    touching = true;
+                    vx += Math.SQRT1_2 * star_speed * this.direction;
+                    vy += Math.SQRT1_2 * star_speed * this.direction;
+                    gx += - Math.SQRT1_2 * 300;
+                    gy += Math.SQRT1_2 * 300;
+                }
+                if (map.getTileWorldXY(this.right+3,
+                                       this.bottom+3))
+                {
+                    // console.log('down right', this.direction);
+                    touching = true;
+                    vx += Math.SQRT1_2 * star_speed * this.direction;
+                    vy += - Math.SQRT1_2 * star_speed * this.direction;
+                    gx += Math.SQRT1_2 * 300;
+                    gy += Math.SQRT1_2 * 300;
+                }
+                if (map.getTileWorldXY(this.left-3,
+                                       this.top-3))
+                {
+                    // console.log('top left');
+                    touching = true;
+                    vx += - Math.SQRT1_2 * star_speed * this.direction;
+                    vy += Math.SQRT1_2 * star_speed * this.direction;
+                    gx += - Math.SQRT1_2 * 300;
+                    gy += - Math.SQRT1_2 * 300;
+                }
+                if (map.getTileWorldXY(this.right+3,
+                                       this.top-3))
+                {
+                    // console.log('top right');
+                    touching = true;
+                    vx += - Math.SQRT1_2 * star_speed * this.direction;
+                    vy += - Math.SQRT1_2 * star_speed * this.direction;
+                    gx += Math.SQRT1_2 * 300;
+                    gy += - Math.SQRT1_2 * 300;
+                }
+            }
+
+            if (touching)
+            {
+                this.body.velocity.x = vx;
+                this.body.velocity.y = vy;
+                this.body.gravity.x = gx;
+                this.body.gravity.y = gy;
+            }
+
+            if (cursors.up.isDown && touching)
+            {
+                this.body.velocity.x += Math.sign(this.body.gravity.x) * -150;
+                this.body.velocity.y += Math.sign(this.body.gravity.y) * -150;
+            }
+        },
+        setup: function () {
+            //  Player physics properties.
+            this.body.bounce.y = 0;
+            this.body.bounce.x = 0;
+            this.body.gravity.y = 300;
+            this.shape = 'star';
+        },
+        bouncing: function () {
+        }
     }
 };
 
@@ -109,6 +242,7 @@ var playState = {
             this.player.setup();
             this.player.body.velocity.x = 0;
             this.player.body.velocity.y = 0;
+            this.player.animations.stop();
             this.blocked = true;
             game.time.events.add(Phaser.Timer.SECOND * .25, function() this.blocked = false, this);
         }
@@ -118,7 +252,7 @@ var playState = {
         //  A simple background for our game
         background.addToWorld();
 
-        var map = game.add.tilemap(levels[cur_level]);
+        map = game.add.tilemap(levels[cur_level]);
         map.addTilesetImage('wallTile', 'gameTiles');
 
         map.setCollisionBetween(1, 16, true, 'walls');
@@ -140,6 +274,7 @@ var playState = {
 
         // Shifting stuff
         this.shifting = {};
+
         this.shifting.square = game.add.group();
         this.shifting.square.enableBody = true;
         for(var i = 0; i < 7; i++)
@@ -153,6 +288,15 @@ var playState = {
         {
             map.createFromObjects('objects', 26 + i , 'objects', 25+i, true, false, this.shifting.round);
         }
+
+        this.shifting.star = game.add.group();
+        this.shifting.star.enableBody = true;
+        for(var i = 0; i < 7; i++)
+        {
+            map.createFromObjects('objects', 34 + i , 'objects', 33+i, true, false, this.shifting.star);
+        }
+
+        // To not make shifting look like wall
         for(var dest in this.shifting)
         {
             this.shifting[dest].forEach(
@@ -190,6 +334,10 @@ var playState = {
         this.player = game.add.sprite(this.player_start_x, this.player_start_y, 'rolling');
 
         // The player and its settings
+        this.animate = {};
+        this.animate.right = this.player.animations.add('right', [3,4,5,6,7,8], 10, true);
+        this.animate.left = this.player.animations.add('left', [8,7,6,5,4,3], 10, true);
+
 
         //  We need to enable physics on the player
         game.physics.arcade.enable(this.player);
