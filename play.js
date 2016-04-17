@@ -7,6 +7,11 @@
 var cursors;
 const accel_go  = 10;
 const square_speed = 200;
+const levels = [
+    "level1",
+    "level2"
+];
+var cur_level = 0;
 
 const shapes = {
     square: {
@@ -112,7 +117,7 @@ var playState = {
         //  A simple background for our game
         background.addToWorld();
 
-        var map = game.add.tilemap('level1');
+        var map = game.add.tilemap(levels[cur_level]);
         map.addTilesetImage('wallTile', 'gameTiles');
 
         map.setCollisionBetween(1, 16, true, 'walls');
