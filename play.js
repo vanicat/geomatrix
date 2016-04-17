@@ -19,17 +19,16 @@ const shapes = {
                     //  Move to the left
                     this.body.velocity.x = -square_speed;
                 }
-                if (cursors.right.isDown)
+                else if (cursors.right.isDown)
                 {
                     this.body.velocity.x += +square_speed;
                 }
-
-                if (cursors.up.isDown)
+                else if (cursors.up.isDown)
                 {
                     // up
                     this.body.velocity.y = -square_speed;
                 }
-                if (cursors.down.isDown)
+                else if (cursors.down.isDown)
                 {
                     this.body.velocity.y += +square_speed;
                 }
