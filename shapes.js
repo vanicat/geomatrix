@@ -68,9 +68,16 @@ const shapes = {
             }
 
             //  Allow the this to jump if they are touching the ground.
-            if (cursors.up.isDown && this.body.blocked.down)
+            if (this.body.blocked.down)
             {
-                this.body.velocity.y += -100;
+                if (cursors.up.isDown)
+                {
+                    this.body.velocity.y += -100;
+                }
+                if (cursors.down.isDown)
+                {
+                    this.body.velocity.y *= 0.8;
+                }
             }
         },
         setup: function () {
