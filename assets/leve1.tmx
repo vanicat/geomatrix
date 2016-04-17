@@ -113,5 +113,8 @@
   <object type="fire" gid="25" x="752" y="592"/>
   <object type="fire" gid="25" x="736" y="592"/>
   <object type="fire" gid="25" x="768" y="592"/>
+  <object gid="27" x="16" y="208"/>
+  <object gid="31" x="32" y="208"/>
+  <object gid="29" x="48" y="208"/>
  </objectgroup>
 </map>
