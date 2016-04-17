@@ -2,12 +2,17 @@ const shapes = {
     square: {
         frame: 1,
         moving: function () {
-            if(Math.abs(this.body.velocity.x)<square_speed)
+            if (Math.abs(this.body.velocity.x)<square_speed/2)
                 this.body.velocity.x = 0;
-            if(Math.abs(this.body.velocity.y)<square_speed)
+            if (Math.abs(this.body.velocity.y)<square_speed/2)
                 this.body.velocity.y = 0;
+
             if(this.body.velocity.x == 0 && this.body.velocity.y == 0)
             {
+                if(this.x % 16 < 2)
+                    this.x += 1 - this.x % 16;
+                if(this.y % 16 < 2)
+                    this.y += 1 - this.y % 16;
                 if (cursors.left.isDown)
                 {
                     //  Move to the left
