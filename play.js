@@ -103,6 +103,8 @@ var playState = {
             this.player.setup();
             this.player.body.velocity.x = 0;
             this.player.body.velocity.y = 0;
+            this.blocked = true;
+            game.time.events.add(Phaser.Timer.SECOND * .25, function() this.blocked = false, this);
         }
     },
 
@@ -197,7 +199,10 @@ var playState = {
                                   }, this);
         }
 
-        this.player.moving();
+        if (! this.blocked)
+        {
+            this.player.moving();
+        }
 
         if (cursors.enter.isDown) {
             game.state.start('play');
