@@ -172,8 +172,18 @@ var playState = {
 
         map.createFromObjects('objects', 25, 'objects', 24, true, false, this.killing);
 
+        this.player = null;
+
+        var obj = map.objects.objects;
+        for(var i = 0 in obj)
+        {
+            if (obj[i].gid == 33)
+                this.player = game.add.sprite(obj[i].x, obj[i].y, 'rolling');
+        }
+        if (! this.player)
+            this.player = game.add.sprite(32, game.world.height - 150, 'rolling');
+
         // The player and its settings
-        this.player = game.add.sprite(32, game.world.height - 150, 'rolling');
 
         //  We need to enable physics on the player
         game.physics.arcade.enable(this.player);

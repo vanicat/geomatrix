@@ -465,6 +465,21 @@
                  "width":0,
                  "x":48,
                  "y":208
+                }, 
+                {
+                 "gid":33,
+                 "height":0,
+                 "name":"start",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":288,
+                 "y":400
                 }],
          "opacity":1,
          "type":"objectgroup",
