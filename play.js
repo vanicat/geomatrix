@@ -34,7 +34,7 @@ var playState = {
             this.player.body.velocity.y = 0;
             this.player.animations.stop();
             this.blocked = true;
-            game.time.events.add(Phaser.Timer.SECOND * .25, function() this.blocked = false, this);
+            game.time.events.add(Phaser.Timer.SECOND * .25, function() {this.blocked = false; }, this);
         }
     },
 
