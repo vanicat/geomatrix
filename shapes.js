@@ -1,6 +1,6 @@
 const shapes = {
     square: {
-        frame: 1,
+        frame: 4,
         moving: function () {
             if (Math.abs(this.body.velocity.x)<square_speed/2)
                 this.body.velocity.x = 0;
@@ -46,7 +46,8 @@ const shapes = {
         },
         play: function () {
             sound.bing.play();
-        }
+        },
+        tileset: 17
     },
 
     round : {
@@ -100,11 +101,178 @@ const shapes = {
         },
         play: function () {
             sound.bang.play();
-        }
+        },
+        tileset: 25
+    },
+
+    round_up : {
+        frame: 3,
+        moving: function () {
+            if (cursors.left.isDown)
+            {
+                //  Move to the left
+                this.body.velocity.x += -1;
+                if (this.accelerator > 0) this.accelerator = 0;
+                else if (this.accelerator < -accel_go)
+                    this.body.velocity.x += -5;
+                else this.accelerator--;
+            }
+            else if (cursors.right.isDown)
+            {
+                this.body.velocity.x += 1;
+                if (this.accelerator < 0) this.accelerator = 0;
+                else if (this.accelerator > -accel_go)
+                    this.body.velocity.x += 5;
+                else this.accelerator++;
+            }
+
+            //  Allow the this to jump if they are touching the ground.
+            if (this.body.blocked.up)
+            {
+                if (cursors.down.isDown)
+                {
+                    this.body.velocity.y += 100;
+                }
+                if (cursors.up.isDown)
+                {
+                    this.body.velocity.y *= 0.8;
+                }
+            }
+        },
+        setup: function () {
+            //  Player physics properties.
+            this.body.bounce.y = 0.9;
+            this.body.bounce.x = 0.9;
+            this.body.gravity.x = 0;
+            this.body.gravity.y = -300;
+            this.accelerator = 0;
+            this.shape = 'round_up';
+        },
+        bouncing: function () {
+            if ( (this.body.blocked.up && this.body.velocity.y > 10) ||
+                 (this.body.blocked.down && this.body.velocity.y < -10) ||
+                 (this.body.blocked.left && this.body.velocity.x > 10) ||
+                 (this.body.blocked.right && this.body.velocity.x < -10) )
+            this.play();
+        },
+        play: function () {
+            sound.bang.play();
+        },
+        tileset: 55
+    },
+
+    round_left : {
+        frame: 2,
+        moving: function () {
+            if (cursors.up.isDown)
+            {
+                this.body.velocity.y += -1;
+                if (this.accelerator > 0) this.accelerator = 0;
+                else if (this.accelerator < -accel_go)
+                    this.body.velocity.y += -5;
+                else this.accelerator--;
+            }
+            else if (cursors.down.isDown)
+            {
+                this.body.velocity.y += 1;
+                if (this.accelerator < 0) this.accelerator = 0;
+                else if (this.accelerator > -accel_go)
+                    this.body.velocity.y += 5;
+                else this.accelerator++;
+            }
+
+            //  Allow the this to jump if they are touching the ground.
+            if (this.body.blocked.left)
+            {
+                if (cursors.right.isDown)
+                {
+                    this.body.velocity.x += 100;
+                }
+                if (cursors.left.isDown)
+                {
+                    this.body.velocity.x *= 0.8;
+                }
+            }
+        },
+        setup: function () {
+            //  Player physics properties.
+            this.body.bounce.y = 0.9;
+            this.body.bounce.x = 0.9;
+            this.body.gravity.x = -300;
+            this.body.gravity.y = 0;
+            this.accelerator = 0;
+            this.shape = 'round_left';
+        },
+        bouncing: function () {
+            if ( (this.body.blocked.up && this.body.velocity.y > 10) ||
+                 (this.body.blocked.down && this.body.velocity.y < -10) ||
+                 (this.body.blocked.left && this.body.velocity.x > 10) ||
+                 (this.body.blocked.right && this.body.velocity.x < -10) )
+            this.play();
+        },
+        play: function () {
+            sound.bang.play();
+        },
+        tileset: 48
+    },
+
+    round_right : {
+        frame: 1,
+        moving: function () {
+            if (cursors.up.isDown)
+            {
+                this.body.velocity.y += -1;
+                if (this.accelerator > 0) this.accelerator = 0;
+                else if (this.accelerator < -accel_go)
+                    this.body.velocity.y += -5;
+                else this.accelerator--;
+            }
+            else if (cursors.down.isDown)
+            {
+                this.body.velocity.y += 1;
+                if (this.accelerator < 0) this.accelerator = 0;
+                else if (this.accelerator > -accel_go)
+                    this.body.velocity.y += 5;
+                else this.accelerator++;
+            }
+
+            //  Allow the this to jump if they are touching the ground.
+            if (this.body.blocked.right)
+            {
+                if (cursors.left.isDown)
+                {
+                    this.body.velocity.x += -100;
+                }
+                if (cursors.right.isDown)
+                {
+                    this.body.velocity.x *= 0.8;
+                }
+            }
+        },
+        setup: function () {
+            //  Player physics properties.
+            this.body.bounce.y = 0.9;
+            this.body.bounce.x = 0.9;
+            this.body.gravity.x = 300;
+            this.body.gravity.y = 0;
+            this.accelerator = 0;
+            this.shape = 'round_right';
+        },
+        bouncing: function () {
+            if ( (this.body.blocked.up && this.body.velocity.y > 10) ||
+                 (this.body.blocked.down && this.body.velocity.y < -10) ||
+                 (this.body.blocked.left && this.body.velocity.x > 10) ||
+                 (this.body.blocked.right && this.body.velocity.x < -10) )
+            this.play();
+        },
+        play: function () {
+            sound.bang.play();
+        },
+        tileset: 41
     },
 
     star: {
-        frame: 2,
+        frame: 8,
         moving: function () {
             if (cursors.left.isDown)
             {
@@ -237,6 +405,7 @@ const shapes = {
         },
         play: function() {
             sound.bing.play();
-        }
+        },
+        tileset: 33
     }
 };
