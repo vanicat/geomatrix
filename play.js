@@ -119,7 +119,10 @@ var playState = {
             this.player.bouncing();
         }
 
-        game.physics.arcade.collide(this.player, this.stuff);
+        if (game.physics.arcade.collide(this.player, this.stuff))
+        {
+            this.player.play();
+        }
         game.physics.arcade.collide(this.stuff, this.walls);
         game.physics.arcade.collide(this.stuff, this.stuff);
 

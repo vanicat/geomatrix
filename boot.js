@@ -27,6 +27,7 @@ var bootState = {
         game.load.audio('clang', ['assets/audio/clang.mp3', 'assets/audio/clang.ogg']);
         game.load.audio('bing', ['assets/audio/bing.mp3', 'assets/audio/bing.ogg']);
         game.load.audio('explo', ['assets/audio/explode.mp3', 'assets/audio/explode.ogg']);
+        game.load.audio('rol', ['assets/audio/rol.mp3', 'assets/audio/rol.ogg']);
 
         game.load.start();
 
@@ -67,6 +68,7 @@ var initState = {
         sound.bing = game.add.audio('bing',1,false);
         sound.clang = game.add.audio('clang',1,false);
         sound.explosion = game.add.audio('explo',1,false);
+        sound.rolling = game.add.audio('rol',1,false);
 
         game.state.start('menu');
     }

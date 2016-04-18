@@ -42,6 +42,9 @@ const shapes = {
             this.shape = 'square';
         },
         bouncing: function () {
+            this.play();
+        },
+        play: function () {
             sound.bing.play();
         }
     },
@@ -51,7 +54,6 @@ const shapes = {
         moving: function () {
             if (cursors.left.isDown)
             {
-                //  Move to the left
                 this.body.velocity.x += -1;
                 if (this.accelerator > 0) this.accelerator = 0;
                 else if (this.accelerator < -accel_go)
@@ -94,20 +96,25 @@ const shapes = {
                  (this.body.blocked.down && this.body.velocity.y < -10) ||
                  (this.body.blocked.left && this.body.velocity.x > 10) ||
                  (this.body.blocked.right && this.body.velocity.x < -10) )
+            this.play();
+        },
+        play: function () {
             sound.bang.play();
         }
     },
 
-    star : {
+    star: {
         frame: 2,
         moving: function () {
             if (cursors.left.isDown)
             {
+                sound.rolling.play();
                 this.animations.play('left');
                 this.direction = -1;
             }
             else if (cursors.right.isDown)
             {
+                sound.rolling.play();
                 this.animations.play('right');
                 this.direction = 1;
             }
@@ -227,6 +234,9 @@ const shapes = {
             this.shape = 'star';
         },
         bouncing: function () {
+        },
+        play: function() {
+            sound.bing.play();
         }
     }
 };
