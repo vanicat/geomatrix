@@ -21,3 +21,9 @@ To let it seen that the shifter are non blocker
 - State "DONE"       from "TODO"       [2016-04-17 dim. 12:35]
 ** TODO levels (lot of)
 - make a wall arround it...
+* Gens
+- [[http://ludumdare.com/compo/ludum-dare-35/?action%3Dpreview&uid%3D11904][eolhing]]
+- [[http://ludumdare.com/compo/ludum-dare-35/?action%3Dpreview&uid%3D50996][oparisy]]
+- [[http://ludumdare.com/compo/ludum-dare-35/?action%3Dpreview&uid%3D42772][looPing]]
+- [[http://ludumdare.com/compo/ludum-dare-35/?action%3Dpreview&uid%3D2982][deepnight]]
+- freaknarf
