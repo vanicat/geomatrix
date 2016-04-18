@@ -12,14 +12,16 @@ Musique: [[http://boscaceoil.net/][boscaceoil]]
 * Roadmap
 ** DONE better handling of speed when shapeshifting
 - State "DONE"       from "TODO"       [2016-04-17 dim. 00:58]
-** TODO shapeshift latter
+** DONE shapeshift latter
+- State "DONE"       from "TODO"       [2016-04-18 lun. 12:50]
 To let it seen that the shifter are non blocker
 ** DONE restart level
 - State "DONE"       from "TODO"       [2016-04-17 dim. 01:10]
-** TODO music
+** DONE music
 ** DONE sound
 - State "DONE"       from "TODO"       [2016-04-17 dim. 12:35]
-** TODO levels (lot of)
+** ABANDON levels (lot of)
+- State "ABANDON"    from "TODO"       [2016-04-18 lun. 12:50]
 - make a wall arround it...
 * Gens
 - [[http://ludumdare.com/compo/ludum-dare-35/?action%3Dpreview&uid%3D11904][eolhing]]
