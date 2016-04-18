@@ -12,11 +12,12 @@ const star_speed = 30;
 const levels = [
     "level1",
     "level2",
-    "level3"
+    "level3",
+    "level4"
 ];
 const nblevel = levels.length;
-var cur_level = 0;
 
+var cur_level = 0;
 
 var playState = {
     shapeshift: function (form) {
@@ -27,6 +28,7 @@ var playState = {
             this.player.moving = shape.moving;
             this.player.setup = shape.setup;
             this.player.bouncing = shape.bouncing;
+            this.player.play = shape.play;
             this.player.setup();
             this.player.body.velocity.x = 0;
             this.player.body.velocity.y = 0;
@@ -93,8 +95,8 @@ var playState = {
 
         // The player and its settings
         this.animate = {};
-        this.animate.right = this.player.animations.add('right', [3,4,5,6,7,8], 10, true);
-        this.animate.left = this.player.animations.add('left', [8,7,6,5,4,3], 10, true);
+        this.animate.right = this.player.animations.add('right', [6,7,8,9,10,11], 10, true);
+        this.animate.left = this.player.animations.add('left', [11,10,9,8,7,6], 10, true);
 
 
         //  We need to enable physics on the player
@@ -180,25 +182,15 @@ var playState = {
     shiftingCreate: function() {
         this.shifting = {};
 
-        this.shifting.square = game.add.group();
-        this.shifting.square.enableBody = true;
-        for(var i = 0; i < 7; i++)
+        for (var dest in shapes)
         {
-            map.createFromObjects('objects', 18 + i , 'objects', 17+i, true, false, this.shifting.square);
-        }
-
-        this.shifting.round = game.add.group();
-        this.shifting.round.enableBody = true;
-        for(var i = 0; i < 7; i++)
-        {
-            map.createFromObjects('objects', 26 + i , 'objects', 25+i, true, false, this.shifting.round);
-        }
-
-        this.shifting.star = game.add.group();
-        this.shifting.star.enableBody = true;
-        for(var i = 0; i < 7; i++)
-        {
-            map.createFromObjects('objects', 34 + i , 'objects', 33+i, true, false, this.shifting.star);
+            this.shifting[dest] = game.add.group();
+            this.shifting[dest].enableBody = true;
+            var tileset = shapes[dest].tileset;
+            for(var i = 0; i < 7; i++)
+            {
+                map.createFromObjects('objects', tileset + 1 + i , 'objects', tileset+i, true, false, this.shifting[dest]);
+            }
         }
 
         // To not make shifting look like wall
