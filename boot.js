@@ -12,14 +12,13 @@ var bootState = {
         game.load.onFileComplete.add(this.fileComplete, this);
         game.load.onLoadComplete.add(this.loadComplete, this);
 
-        game.load.image('ground', 'assets/platform.png');
         game.load.spritesheet('rolling', 'assets/rolling.png', 16, 16);
 
         game.load.tilemap('level1', 'assets/leve1.json', null, Phaser.Tilemap.TILED_JSON);
         game.load.tilemap('level2', 'assets/leve2.json', null, Phaser.Tilemap.TILED_JSON);
         game.load.tilemap('level3', 'assets/leve3.json', null, Phaser.Tilemap.TILED_JSON);
         game.load.tilemap('level4', 'assets/leve4.json', null, Phaser.Tilemap.TILED_JSON);
-        game.load.tilemap('sandbox', 'assets/sandbox.json', null, Phaser.Tilemap.TILED_JSON);
+
         game.load.image('gameTiles', 'assets/walls.png');
         game.load.spritesheet('objects', 'assets/walls.png', 16, 16);
 
