@@ -5,6 +5,12 @@ var menuState = {
                                       { font: '50px Arial', fill: '#ffffff'});
         var startLabel = game.add.text(80,160, 'Click here to start',
                                        { font: '50px Arial', fill: '#ffffff'});
+        game.add.text(80,80 * 3 + 40, 'Use arrows keys to move',
+                      { font: '35px Arial', fill: '#ffffff'});
+        game.add.text(80,80 * 3 + 40*2, 'Enter to restart a level',
+                      { font: '35px Arial', fill: '#ffffff'});
+        game.add.text(80,80 * 3 + 40*3, 'Esc or F5 for the menu',
+                      { font: '35px Arial', fill: '#ffffff'});
         startLabel.inputEnabled = true;
         startLabel.events.onInputDown.add(this.next, this);
         var muteLabel = game.add.text(game.world.width - 160,game.world.height - 80, 'Mute Music',
