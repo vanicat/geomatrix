@@ -29,3 +29,15 @@ To let it seen that the shifter are non blocker
 - [[http://ludumdare.com/compo/ludum-dare-35/?action%3Dpreview&uid%3D42772][looPing]]
 - [[http://ludumdare.com/compo/ludum-dare-35/?action%3Dpreview&uid%3D2982][deepnight]]
 - freaknarf
+* Classement
+| Category   | place | participant |  % | Note |
+|------------+-------+-------------+----+------|
+| Innovation |   389 |        1123 | 35 | 3.22 |
+| Theme      |   416 |        1135 | 37 | 3.44 |
+| Fun        |   460 |        1157 | 40 | 3.14 |
+| Overall    |   533 |        1194 | 45 | 3.14 |
+| Mood       |   619 |        1019 | 61 | 2.69 |
+| Graphics   |   754 |        1179 | 64 | 2.47 |
+| Humor      |   581 |         795 | 73 | 1.86 |
+| Audio      |   523 |         704 | 74 | 2.49 |
+#+TBLFM: $4=100*$2/$3;%.0f
